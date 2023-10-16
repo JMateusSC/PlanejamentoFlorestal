@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class NotificationsConfig(AppConfig):
+class LandsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'notifications'
+    name = 'lands'

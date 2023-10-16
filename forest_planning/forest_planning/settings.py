@@ -11,23 +11,40 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 import os
+
+# Secret key
+SECRET_KEY = config('SECRET_KEY')
+
+# Debug mode
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Database settings
+# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    },
+    #'default': {
+    #    'ENGINE': 'django.db.backends.postgresql',
+    #    'NAME': config('DB_NAME'),
+    #    'USER': config('DB_USER'),
+    #    'PASSWORD': config('DB_PASSWORD'),
+    #    'HOST': 'localhost',
+    #    'PORT': '5432',
+    #}
+}
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-d6bn01&6x%mx9yqz@3)=&m)(#hwv8*ic(36x9r*9x748onjl_^'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -38,12 +55,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'account',
     'analysis',
-    'areas',
+    'lands',
     'home',
     'login',
-    'notifications',
+    'notifications', # https://pypi.org/project/django-notifications-hq/
+    'allauth', # https://pypi.org/project/django-allauth/
+    'allauth.account',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +72,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'forest_planning.urls'
@@ -75,18 +94,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'forest_planning.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -130,7 +137,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'templates'),
 ]
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+# Account & Registration
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+#ACCOUNT_EMAIL_VERIFICATION = 'mandatory'

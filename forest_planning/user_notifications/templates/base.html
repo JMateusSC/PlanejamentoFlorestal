@@ -1,0 +1,9 @@
+{% load notifications_tags %}
+
+<!-- Display the notifications -->
+{% notifications_unread as unread_notifications %}
+<ul>
+  {% for notification in unread_notifications %}
+    <li>{{ notification.description }}</li>
+  {% endfor %}
+</ul>
