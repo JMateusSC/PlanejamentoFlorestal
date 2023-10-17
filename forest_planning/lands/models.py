@@ -5,7 +5,7 @@ from django.contrib.postgres.fields import ArrayField
 class Land(models.Model):
     id = models.AutoField(primary_key=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    plots = models.FileField(upload_to="land_areas/")
     creation_date = models.DateField()
     last_update_date = models.DateField()
-    plots = models.FileField(upload_to="land_areas/")
 

@@ -1,12 +1,18 @@
-{% extends 'base.html' %}
-
-{% block title %}Início{% endblock %}
-
-{% block content %}
-<header>
-    <ul>
-        <a href="accounts/signup/"><li>Cadastre-se</li></a>
-        <a href="accounts/login/"><li>Entrar</li></a>
-    </ul>
-</header>
-{% endblock %}
+<html>
+<head>
+    <title>Início</title>
+</head>
+<body>
+    <header>
+        {% if user.is_authenticated %}
+        <div>Olá, {{user.username}}!</div>
+        <a href="accounts/logout">Sair</a>
+        {% else %}
+        <ul>
+            <a href="accounts/signup"><li>Cadastre-se</li></a>
+            <a href="accounts/login"><li>Entrar</li></a>
+        </ul>
+        {% endif %}
+    </header>
+</body>
+</html>
